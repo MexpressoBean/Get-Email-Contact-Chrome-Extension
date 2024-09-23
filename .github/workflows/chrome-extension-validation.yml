@@ -1,0 +1,34 @@
+name: Chrome Extension Validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-extension:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Chrome Extension Validator
+        run: npm install -g chrome-extension-validator
+
+      - name: Validate Chrome Extension
+        run: chrome-extension-validator manifest.json
+
+      - name: Install ESLint
+        run: npm install eslint --save-dev
+
+      - name: Run ESLint
+        run: npx eslint . --ext .js,.jsx
