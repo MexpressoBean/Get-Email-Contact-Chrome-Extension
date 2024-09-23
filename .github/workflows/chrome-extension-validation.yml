@@ -21,11 +21,11 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install Chrome Extension Validator
-        run: npm install -g chrome-extension-validator
+      - name: Install web-ext
+        run: npm install -g web-ext
 
       - name: Validate Chrome Extension
-        run: chrome-extension-validator manifest.json
+        run: web-ext lint
 
       - name: Install ESLint
         run: npm install eslint --save-dev
