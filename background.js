@@ -25,21 +25,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
   });
 
-// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-//     if (message.name === 'extractEmailBody') {
-//       // Relay the message to the content script
-//       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-//         console.log(tabs);
-//         chrome.tabs.sendMessage(tabs[0].id, { name: 'extractEmailBody' }, (response) => {
-//             console.log(JSON.stringify(response))
-//           sendResponse({ emailContent: response.emailContent });
-//         });
-//       });
-//       // Keep the message channel open
-//       return true;
-//     }
-//   });
-
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.name === 'extractEmailBody') {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
