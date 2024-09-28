@@ -1,41 +1,28 @@
 // Event listener for button click
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('logButton').addEventListener('click', () => {
-    console.log("********** BUTTON CLICKED **********")
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       // Inject the script into the active tab to extract email content
       chrome.scripting.executeScript({
         target: { tabId: tabs[0].id },
-        function: extractContactInfoFromPage
+        function: extractEmailBodyContent
       });
     });
   });
 });
 
-// Function that will run in the active tab to extract contact info
-function extractContactInfoFromPage() {
+function extractEmailBodyContent() {
   // Try to find common email body selectors (e.g., Gmail)
-  const emailBody = document.querySelector('div.ii.gt');  // Gmail example
+  const emailBody = document.querySelector('div.ii.gt');  // Gmail email body element
 
   if (emailBody) {
-    // Extract text content from the email
+    // Extract the entire text content from the email body
     const emailText = emailBody.innerText;
 
-    // Extract first and last name (very basic placeholder logic for now)
-    const nameRegex = /\b([A-Z][a-z]+)\s([A-Z][a-z]+)\b/;  // Simple regex for names like "John Doe"
-    const matches = emailText.match(nameRegex);
+    console.log('Extracted Email Body Content:', emailText);
 
-    if (matches) {
-      const firstName = matches[1];
-      const lastName = matches[2];
-
-      console.log(`Extracted Name: ${firstName} ${lastName}`);
-
-      // Send the extracted data back to the extension's popup console
-      chrome.runtime.sendMessage({ firstName, lastName });
-    } else {
-      console.log('No name found');
-    }
+    // Send the extracted email content back to the extension's popup or background script
+    chrome.runtime.sendMessage({ emailContent: emailText });
   } else {
     console.log('Email body not found.');
   }

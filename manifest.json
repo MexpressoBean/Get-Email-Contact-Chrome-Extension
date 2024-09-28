@@ -3,10 +3,9 @@
   "name": "Email Contact Extractor",
   "version": "1.0",
   "description": "Extract contact information from email content",
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "https://mail.google.com/*"],
 
   "action": {
     "default_popup": "popup.html"
-  },
-  "key": "n6LO7rS4OMAsxnGVfABi3R3vGswZlsh"
+  }
 }
