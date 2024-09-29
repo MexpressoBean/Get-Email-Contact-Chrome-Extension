@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.modal {
+    display: flex;
+    height: 300px; /* Adjust as necessary */
+    width: 600px; /* Adjust as necessary */
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.button-container {
+    width: 30%; /* Adjust for button width */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #e7e7e7; /* Light gray background for buttons */
+}
+
+.preview-container {
+    width: 70%; /* Remaining space for preview */
+    padding: 20px;
+}
+
+.styled-button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* Remove borders */
+    padding: 15px 20px; /* Padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: block; /* Block element */
+    font-size: 16px; /* Font size */
+    margin: 10px 0; /* Margin */
+    cursor: pointer; /* Pointer/hand icon */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, transform 0.3s; /* Transition effect */
+}
+
+.styled-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly increase size */
+}
+
+.contact-info {
+    background-color: #f9f9f9; /* Light background for preview */
+    border: 1px solid #ddd; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px;
+    white-space: pre-wrap; /* Keep formatting */
+    overflow: auto; /* Scroll if needed */
+}

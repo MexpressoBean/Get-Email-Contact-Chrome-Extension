@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simple Button Logger</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <button id="logButton">Click Me!</button>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+    <title>Contact Info</title>
+</head>
+<body>
+    <div class="modal">
+        <div class="button-container">
+            <button id="getContactInfoButton" class="styled-button">Get Contact Info from Gmail</button>
+            <button id="createContactButton" class="styled-button">Create Contact in Google Contacts</button>
+        </div>
+        <div class="preview-container">
+            <h2>Contact Info Preview</h2>
+            <pre id="contactInfoPreview" class="contact-info"></pre>
+        </div>
+    </div>
     <script src="popup.js"></script>
-  </body>
+</body>
 </html>
