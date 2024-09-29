@@ -21,11 +21,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
               Please return the contact information in a JSON object with the following fields:
 
               full_name
+              first name
+              last name (please watch out for people who have two last names or hyphenated last names if applicable)
+              nickname (if available)
               email
               phone_number
               website (if available)
               social_media (if available, please seperate out each applicable social media like: Instagram: handle, Facebook: name, etc)
-              If any field is not available, leave it as an empty string.
+              If any field is not available, do not include it in the output.
             `,
           },
         ],

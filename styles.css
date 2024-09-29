@@ -7,12 +7,12 @@ body {
 
 .modal {
     display: flex;
-    height: 400px; /* Increased height for better visibility */
-    width: 600px; /* Adjust as necessary */
+    height: 600px; /* Fixed height */
+    width: 800px; /* Adjusted width to maximum */
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    overflow: hidden; /* Prevent overflow */
 }
 
 .button-container {
@@ -22,11 +22,15 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #e7e7e7; /* Light gray background for buttons */
+    padding: 20px; /* Added padding for better layout */
 }
 
 .preview-container {
     width: 70%; /* Remaining space for preview */
     padding: 20px;
+    display: flex;
+    flex-direction: column; /* Flex for stacked layout */
+    height: 100%; /* Use full height */
 }
 
 .styled-button {
@@ -64,7 +68,15 @@ body {
     border-radius: 5px; /* Rounded corners */
     padding: 15px; /* Increased padding */
     white-space: pre-wrap; /* Keep formatting */
-    overflow: auto; /* Scroll if needed */
+    overflow: hidden; /* Prevent scroll bars */
     font-size: 16px; /* Increased font size for better visibility */
-    height: 100%; /* Full height */
+    flex-grow: 1; /* Allow the preview to take up remaining space */
+}
+
+.advertisement {
+    margin-top: 20px; /* Space above advertisement */
+    text-align: center; /* Center ad text */
+    font-size: 14px; /* Smaller text for ads */
+    color: #888; /* Gray color for ads */
+    padding: 10px; /* Padding around ads */
 }
