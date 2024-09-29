@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -7,11 +7,11 @@ body {
 
 .modal {
     display: flex;
-    height: 600px; /* Fixed height */
-    width: 800px; /* Adjusted width to maximum */
+    height: 584px; /* Fixed height */
+    width: 784px; /* Adjusted width to maximum */
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     overflow: hidden; /* Prevent overflow */
 }
 
@@ -21,8 +21,9 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #e7e7e7; /* Light gray background for buttons */
+    background-color: #f1f1f1; /* Slightly darker gray background */
     padding: 20px; /* Added padding for better layout */
+    border-right: 2px solid #e0e0e0; /* Add a border for separation */
 }
 
 .preview-container {
@@ -30,7 +31,7 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column; /* Flex for stacked layout */
-    height: 100%; /* Use full height */
+    height: 90%; /* Use full height */
 }
 
 .styled-button {
@@ -41,7 +42,7 @@ body {
     text-align: center; /* Centered text */
     text-decoration: none; /* Remove underline */
     display: block; /* Block element */
-    font-size: 18px; /* Increased font size */
+    font-size: 16px; /* Adjusted font size */
     margin: 10px 0; /* Margin */
     cursor: pointer; /* Pointer/hand icon */
     border-radius: 5px; /* Rounded corners */
