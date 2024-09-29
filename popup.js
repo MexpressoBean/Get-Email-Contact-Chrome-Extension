@@ -4,9 +4,17 @@ document.addEventListener("DOMContentLoaded", function () {
     chrome.runtime.sendMessage({ name: "extractEmailBody" }, (response) => {
       if (response && response.emailContent) {
         chrome.runtime.sendMessage(
-          { name: "extractContactInfoFromEmail", emailContent: response.emailContent },
+          {
+            name: "extractContactInfoFromEmail",
+            emailContent: response.emailContent,
+            senderEmailAddress: response.senderEmailAddress,
+          },
           (response) => {
-            console.log(`RESPONSE in popup.js: ${response}`);
+            console.log(
+              `RESPONSE in popup.js: ${
+                response.contactInfo
+              } && ${JSON.stringify(response.contactInfo)}`
+            );
           }
         );
       } else {

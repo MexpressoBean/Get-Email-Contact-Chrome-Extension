@@ -13,7 +13,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         messages: [
           {
             role: "user",
-            content: `Can you please parse this email body message and give me back the senders name and any contact info (full name, email, phone number, etc) listed for them: ${request.emailContent}.  Please give me the contact info in an organized json format.`,
+            content: `
+              This is an email message from the sender's email address: ${request.senderEmailAddress}. Based on the following email body, please extract the sender's full name, the sender's email (${request.senderEmailAddress}), phone number, and any other relevant contact information (e.g., website, social media) in JSON format:
+
+              Email body: ${request.emailContent}
+
+              Please return the contact information in a JSON object with the following fields:
+
+              full_name
+              email
+              phone_number
+              website (if available)
+              social_media (if available, please seperate out each applicable social media like: Instagram: handle, Facebook: name, etc)
+              If any field is not available, leave it as an empty string.
+            `,
           },
         ],
       }),
@@ -29,10 +42,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return response.json();
       })
       .then((data) => {
-        console.log("OpenAI API Response:", data);
+        // Capture and parse OpenAI chat response
         const parsedContactInfo = JSON.parse(data.choices[0].message.content);
-        console.log(JSON.stringify(parsedContactInfo));
-        // Handle the data as needed
+
+        sendResponse({
+          contactInfo: parsedContactInfo,
+        });
       })
       .catch((error) => {
         console.error("Error fetching from OpenAI API:", error);
@@ -62,7 +77,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 if (chrome.runtime.lastError) {
                   console.error(chrome.runtime.lastError.message);
                 } else {
-                  sendResponse({ emailContent: response.emailContent });
+                  sendResponse({
+                    emailContent: response.emailContent,
+                    senderEmailAddress: response.senderEmailAddress,
+                  });
                 }
               }
             );
