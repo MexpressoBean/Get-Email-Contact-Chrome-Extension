@@ -1,8 +1,12 @@
 body {
-    font-family: 'Roboto', sans-serif; /* Changed font to Roboto */
+    font-family: 'Roboto', sans-serif; /* Modern font */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f0f0f5; /* Soft background color for a clean look */
+    display: flex;
+    justify-content: center; /* Center the modal horizontally */
+    align-items: center; /* Center the modal vertically */
+    height: 100vh; /* Full viewport height */
 }
 
 .modal {
@@ -10,68 +14,76 @@ body {
     height: 584px; /* Fixed height */
     width: 784px; /* Adjusted width to maximum */
     background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 20px; /* Smoother corners for a modern look */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
     overflow: hidden; /* Prevent overflow */
 }
 
 .button-container {
-    width: 30%; /* Adjust for button width */
+    width: 35%; /* Width for buttons */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    background-color: #f1f1f1; /* Slightly darker gray background */
-    padding: 20px; /* Added padding for better layout */
-    border-right: 2px solid #e0e0e0; /* Add a border for separation */
-}
-
-.preview-container {
-    width: 70%; /* Remaining space for preview */
-    padding: 20px;
-    display: flex;
-    flex-direction: column; /* Flex for stacked layout */
-    height: 90%; /* Use full height */
+    align-items: stretch; /* Stretch buttons to full width */
+    background-color: #007aff; /* Apple-like blue for buttons */
+    padding: 20px; /* Padding for aesthetics */
 }
 
 .styled-button {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    border: none; /* Remove borders */
-    padding: 15px 20px; /* Padding */
+    background-color: #ffffff; /* White button background for contrast */
+    color: #007aff; /* Blue text */
+    border: 2px solid #007aff; /* Blue border */
+    padding: 14px; /* Uniform padding */
     text-align: center; /* Centered text */
-    text-decoration: none; /* Remove underline */
-    display: block; /* Block element */
-    font-size: 16px; /* Adjusted font size */
+    font-size: 16px; /* Font size */
     margin: 10px 0; /* Margin */
-    cursor: pointer; /* Pointer/hand icon */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s, transform 0.3s; /* Transition effect */
-    width: 90%; /* Button width */
+    cursor: pointer; /* Pointer cursor */
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+    outline: none; /* Remove outline */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
 }
 
 .styled-button:hover {
-    background-color: #45a049; /* Darker green on hover */
-    transform: scale(1.05); /* Slightly increase size */
+    background-color: #007aff; /* Blue background on hover */
+    color: white; /* White text on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
 }
 
 .clear-button {
-    background-color: #f44336; /* Red background for clear button */
+    background-color: #ff3b30; /* Red background for clear button */
+    color: white; /* White text */
 }
 
 .clear-button:hover {
-    background-color: #d32f2f; /* Darker red on hover */
+    background-color: #ff2b20; /* Darker red on hover */
+}
+
+.preview-container {
+    width: 65%; /* Remaining space for preview */
+    padding: 30px; /* Padding for aesthetics */
+    display: flex;
+    flex-direction: column; /* Flex for stacked layout */
+    height: 90%; /* Use full height */
+    background-color: #f9f9f9; /* Light gray background for contrast */
+}
+
+h2 {
+    font-weight: 500; /* Slightly bolder for titles */
+    color: #333; /* Dark text for readability */
+    margin-bottom: 20px; /* Spacing below title */
 }
 
 .contact-info {
-    background-color: #f9f9f9; /* Light background for preview */
-    border: 1px solid #ddd; /* Border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 15px; /* Increased padding */
+    background-color: #ffffff; /* White background for contact info */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Increased padding */
     white-space: pre-wrap; /* Keep formatting */
     overflow: hidden; /* Prevent scroll bars */
-    font-size: 16px; /* Increased font size for better visibility */
+    font-size: 16px; /* Font size for better visibility */
     flex-grow: 1; /* Allow the preview to take up remaining space */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect for the contact info box */
 }
 
 .advertisement {
@@ -80,4 +92,7 @@ body {
     font-size: 14px; /* Smaller text for ads */
     color: #888; /* Gray color for ads */
     padding: 10px; /* Padding around ads */
+    background-color: #eaeaea; /* Light background for advertisement area */
+    border-radius: 10px; /* Rounded corners for the ad area */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect for the ad area */
 }
