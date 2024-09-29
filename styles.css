@@ -7,7 +7,7 @@ body {
 
 .modal {
     display: flex;
-    height: 300px; /* Adjust as necessary */
+    height: 400px; /* Increased height for better visibility */
     width: 600px; /* Adjust as necessary */
     background-color: white;
     border-radius: 10px;
@@ -37,11 +37,12 @@ body {
     text-align: center; /* Centered text */
     text-decoration: none; /* Remove underline */
     display: block; /* Block element */
-    font-size: 16px; /* Font size */
+    font-size: 18px; /* Increased font size */
     margin: 10px 0; /* Margin */
     cursor: pointer; /* Pointer/hand icon */
     border-radius: 5px; /* Rounded corners */
     transition: background-color 0.3s, transform 0.3s; /* Transition effect */
+    width: 90%; /* Button width */
 }
 
 .styled-button:hover {
@@ -49,11 +50,21 @@ body {
     transform: scale(1.05); /* Slightly increase size */
 }
 
+.clear-button {
+    background-color: #f44336; /* Red background for clear button */
+}
+
+.clear-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
 .contact-info {
     background-color: #f9f9f9; /* Light background for preview */
     border: 1px solid #ddd; /* Border */
     border-radius: 5px; /* Rounded corners */
-    padding: 10px;
+    padding: 15px; /* Increased padding */
     white-space: pre-wrap; /* Keep formatting */
     overflow: auto; /* Scroll if needed */
+    font-size: 16px; /* Increased font size for better visibility */
+    height: 100%; /* Full height */
 }

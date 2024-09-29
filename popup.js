@@ -35,4 +35,11 @@ document.addEventListener("DOMContentLoaded", function () {
       // Logic for creating the contact in Google Contacts goes here
       console.log("Create contact button clicked");
     });
+
+  document
+    .getElementById("clearContactInfoButton")
+    .addEventListener("click", () => {
+      // Clear the contact info preview
+      document.getElementById("contactInfoPreview").textContent = "";
+    });
 });
