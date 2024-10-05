@@ -28,7 +28,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
               phone_number
               website (if available)
               social_media (if available, please seperate out each applicable social media like: Instagram: handle, Facebook: name, etc)
-              If any field is not available, do not include it in the output.
+              If any field is not available or if it will be an empty string, DO NOT include it in the output.
             `,
           },
         ],
@@ -91,6 +91,31 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         );
       }
     });
+    return true; // Keep the message channel open for async response
+  }
+});
+
+// add handler here to google people api call
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  console.log("Received message:", message); // Debugging log
+  if (message.name === "createGoogleContactViaPeopleApi") {
+    // Use the token to make an API request to a Google service (e.g., Google Contacts API)
+    fetch(
+      "https://people.googleapis.com/v1/people/me/connections?personFields=names,emailAddresses",
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + message.googleAuthToken,
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("API response data:", data);
+      })
+      .catch((error) => {
+        console.error("Error making API request:", error);
+      });
     return true; // Keep the message channel open for async response
   }
 });
