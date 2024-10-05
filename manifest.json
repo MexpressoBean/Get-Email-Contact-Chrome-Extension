@@ -7,7 +7,7 @@
     "activeTab",
     "scripting",
     "tabs",
-    "https://mail.google.com/*"
+    "identity"
   ],
 
   "action": {
@@ -21,5 +21,10 @@
       "matches": ["https://mail.google.com/*"],
       "js": ["contentScript.js"]
     }
-  ]
+  ],
+  "oauth2": {
+    "client_id": "1032215786471-8v4ht119pk7nuvramcv7iqiug25saoub.apps.googleusercontent.com",
+    "scopes":["https://www.googleapis.com/auth/contacts.readonly"]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuhrhu4yCx0UzQLSYpOqXvP58LTa16PhLQUNfeFPU1IPo46m3GGnjtbncC4OX6Pp5XHiiF2vMCp2dq0aoH4BQg68uR37t2943Jx29eMKZQC1rz7Dv7perSeE8GL5sXKIzf+rVpL0+1r1PjRFLDxGrOKdViQiFu90pIxUBPfPl/kOLCiyHONtoALxW5X9kWFVnK2PvkFrepZYrjM6tDhsoZCa1PJ6/tgjcySFGd9wcxeWilhOlL1ke8q5mlD8IpG7Z/MBb2E8J0569C1AjMCwACD5Rn7YnYdr2HvONos+b1kREuCTvTVffK9fTu0M2ohhiRohKr+D//FBBC/4ZaPTokQIDAQAB"
 }

@@ -6,11 +6,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"> <!-- Link to Google Fonts -->
     <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
     <title>Contact Info</title>
+    <script type="text/javascript" src="oauth.js"></script>
 </head>
 <body>
     <div class="modal">
         <div class="button-container">
-            <button id="getContactInfoButton" class="styled-button">Get Contact Info from Gmail</button>
+          <button id="authButton" class="styled-button">Login with Google</button>
+          <button id="getContactInfoButton" class="styled-button">Get Contact Info from Gmail</button>
             <button id="createContactButton" class="styled-button">Create Contact in Google Contacts</button>
             <button id="clearContactInfoButton" class="styled-button clear-button">Clear Contact Info</button>
         </div>
