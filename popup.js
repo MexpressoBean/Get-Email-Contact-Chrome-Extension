@@ -1,4 +1,6 @@
 // Event listener for button click
+let contactInfo = null;
+
 document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("getContactInfoButton")
@@ -12,15 +14,16 @@ document.addEventListener("DOMContentLoaded", function () {
               senderEmailAddress: response.senderEmailAddress,
             },
             (response) => {
+              contactInfo = response.contactInfo
               console.log(
                 `RESPONSE in popup.js: ${
-                  response.contactInfo
-                } && ${JSON.stringify(response.contactInfo)}`
+                  contactInfo
+                } && ${JSON.stringify(contactInfo)}`
               );
 
               // Display the contact info in the preview area
               document.getElementById("contactInfoPreview").textContent =
-                JSON.stringify(response.contactInfo, null, 2);
+                JSON.stringify(contactInfo, null, 2);
             }
           );
         } else {
@@ -34,6 +37,17 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", () => {
       // Logic for creating the contact in Google Contacts goes here
       console.log("Create contact button clicked");
+
+      chrome.runtime.sendMessage(
+        {
+          name: "createGoogleContactViaPeopleApi",
+          contactInfoBody: contactInfo
+        },
+        (response) => {
+          // need to add something here that will prevent the user from hitting the button until there is new contact info
+          // also maybe i null out the contact info?
+        }
+      );
     });
 
   document
