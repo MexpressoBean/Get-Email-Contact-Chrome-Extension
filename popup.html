@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"> <!-- Link to Google Fonts -->
-    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Link to Google Fonts -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Link to the CSS file -->
     <title>Contact Info</title>
     <script type="text/javascript" src="oauth.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="modal">
-        <div class="button-container">
-          <button id="authButton" class="styled-button">Login with Google</button>
-          <button id="getContactInfoButton" class="styled-button">Get Contact Info from Gmail</button>
-            <button id="createContactButton" class="styled-button" disabled>Create Contact in Google Contacts</button>
-            <button id="clearContactInfoButton" class="styled-button clear-button">Clear Contact Info</button>
+      <div class="button-container">
+        <button id="authButton" class="styled-button">Login with Google</button>
+        <button id="getContactInfoButton" class="styled-button">
+          Get Contact Info from Gmail
+        </button>
+        <button id="createContactButton" class="styled-button" disabled>
+          Create Contact in Google Contacts
+        </button>
+        <button id="clearContactInfoButton" class="styled-button clear-button">
+          Clear Contact Info
+        </button>
+      </div>
+      <div class="preview-container">
+        <h2>Contact Info Preview</h2>
+        <div id="contactInfoPreview" class="contact-info">
+          <p><strong>Email:</strong> <span id="emailPreview"></span></p>
+          <p>
+            <strong>First Name:</strong> <span id="firstNamePreview"></span>
+          </p>
+          <p><strong>Last Name:</strong> <span id="lastNamePreview"></span></p>
+          <p><strong>Phone Number:</strong> <span id="phonePreview"></span></p>
+          <p><strong>URL:</strong> <span id="urlPreview"></span></p>
         </div>
-        <div class="preview-container">
-            <h2>Contact Info Preview</h2>
-            <div id="contactInfoPreview" class="contact-info">
-                <p><strong>Email:</strong> <span id="emailPreview"></span></p>
-                <p><strong>First Name:</strong> <span id="firstNamePreview"></span></p>
-                <p><strong>Last Name:</strong> <span id="lastNamePreview"></span></p>
-                <p><strong>Phone Number:</strong> <span id="phonePreview"></span></p>
-                <p><strong>URL:</strong> <span id="urlPreview"></span></p>
-            </div>
-            <div class="advertisement">
-                <p>Your ad space here!</p>
-            </div>
+        <div class="advertisement">
+          <p>Your ad space here!</p>
         </div>
+      </div>
     </div>
     <script src="popup.js"></script>
-</body>
+  </body>
 </html>

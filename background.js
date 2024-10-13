@@ -141,13 +141,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             return response.json();
           })
           .then((data) => {
-            // const statusMessage = 
             console.log("API response data:", data);
-            sendResponse({responseMessage: "Contact created in Google successfully!"}) // send some response to the pop up to indicate success/failure
+            sendResponse({
+              responseMessage: "Contact created in Google successfully!",
+            }); // send some response to the pop up to indicate success/failure
           })
           .catch((error) => {
             console.error("Error making API request:", error);
-            sendResponse({responseMessage: `There was an error creating the contact in Google: ${error}`})
+            sendResponse({
+              responseMessage: `There was an error creating the contact in Google: ${error}`,
+            });
           });
       }
       // might want to add an else case to try to log in or do something here

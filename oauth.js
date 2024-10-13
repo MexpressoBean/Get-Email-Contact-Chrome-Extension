@@ -1,6 +1,5 @@
 window.onload = function () {
   const authButton = document.getElementById("authButton");
-  const createGoogleContactButton = document.getElementById("createContactButton");
 
   // Initial check for current logged in user in chrome browser
   chrome.identity.getAuthToken({ interactive: false }, function (token) {

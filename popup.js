@@ -3,7 +3,9 @@ let contactInfo = null;
 
 document.addEventListener("DOMContentLoaded", function () {
   const getContactInfoButton = document.getElementById("getContactInfoButton");
-  const createGoogleContactButton = document.getElementById("createContactButton");
+  const createGoogleContactButton = document.getElementById(
+    "createContactButton"
+  );
   const clearContactInfoButton = document.getElementById(
     "clearContactInfoButton"
   );
@@ -27,16 +29,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (contactInfo) {
               emailPreview.textContent =
-              contactInfo.emailAddresses[0].value || "N/A";
-            firstNamePreview.textContent =
-              contactInfo.names[0].givenName || "N/A";
-            lastNamePreview.textContent =
-              contactInfo.names[0].familyName || "N/A";
-            phonePreview.textContent =
-              contactInfo.phoneNumbers[0].value || "N/A";
-            urlPreview.textContent = contactInfo.urls[0].value || "N/A";
+                contactInfo.emailAddresses[0].value || "N/A";
+              firstNamePreview.textContent =
+                contactInfo.names[0].givenName || "N/A";
+              lastNamePreview.textContent =
+                contactInfo.names[0].familyName || "N/A";
+              phonePreview.textContent =
+                contactInfo.phoneNumbers[0].value || "N/A";
+              urlPreview.textContent = contactInfo.urls[0].value || "N/A";
 
-            createGoogleContactButton.disabled = false; // Remove the disabled state
+              createGoogleContactButton.disabled = false; // Remove the disabled state
             }
           }
         );
@@ -50,8 +52,10 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Create contact button clicked");
 
     chrome.storage.local.get(["authToken"], function (result) {
-      if (result.authToken) { // am i logged in?
-        if (emailPreview.textContent !== "") { //do i have email info in the preview?
+      if (result.authToken) {
+        // am i logged in?
+        if (emailPreview.textContent !== "") {
+          //do i have email info in the preview?
           chrome.runtime.sendMessage(
             {
               name: "createGoogleContactViaPeopleApi",
@@ -64,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
           );
         }
       }
-    })
+    });
   });
 
   clearContactInfoButton.addEventListener("click", () => {
