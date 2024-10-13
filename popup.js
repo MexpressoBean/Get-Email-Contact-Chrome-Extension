@@ -1,135 +1,168 @@
-// Event listener for button click
 let contactInfo = null;
 
-document.addEventListener("DOMContentLoaded", function () {
-  const getContactInfoButton = document.getElementById("getContactInfoButton");
-  const createGoogleContactButton = document.getElementById(
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize all elements and event listeners
+  initializeElements();
+  checkIfOnGmail();
+  initializeEventListeners();
+});
+
+// Initialize UI elements
+const initializeElements = () => {
+  this.getContactInfoButton = document.getElementById("getContactInfoButton");
+  this.createGoogleContactButton = document.getElementById(
     "createContactButton"
   );
-  const clearContactInfoButton = document.getElementById(
+  this.clearContactInfoButton = document.getElementById(
     "clearContactInfoButton"
   );
-  const emailPreview = document.getElementById("emailPreview");
-  const firstNamePreview = document.getElementById("firstNamePreview");
-  const lastNamePreview = document.getElementById("lastNamePreview");
-  const phonePreview = document.getElementById("phonePreview");
-  const urlPreview = document.getElementById("urlPreview");
-  const bannerMessageElement = document.getElementById("bannerMessage");
-  const messageBanner = document.getElementById("messageBanner");
-  const closeBannerButton = document.getElementById("closeBannerButton");
-  const loadingSpinnerGet = document.getElementById("loadingSpinnerGet");
-  const loadingSpinnerCreate = document.getElementById("loadingSpinnerCreate");
+  this.emailPreview = document.getElementById("emailPreview");
+  this.firstNamePreview = document.getElementById("firstNamePreview");
+  this.lastNamePreview = document.getElementById("lastNamePreview");
+  this.phonePreview = document.getElementById("phonePreview");
+  this.urlPreview = document.getElementById("urlPreview");
+  this.bannerMessageElement = document.getElementById("bannerMessage");
+  this.messageBanner = document.getElementById("messageBanner");
+  this.closeBannerButton = document.getElementById("closeBannerButton");
+  this.loadingSpinnerGet = document.getElementById("loadingSpinnerGet");
+  this.loadingSpinnerCreate = document.getElementById("loadingSpinnerCreate");
+};
 
-  const showLoadingSpinner = (spinner) => {
-    spinner.classList.remove("hidden");
-  };
-
-  const hideLoadingSpinner = (spinner) => {
-    spinner.classList.add("hidden");
-  };
-
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+// Check if current page is Gmail
+const checkIfOnGmail = () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const currentTab = tabs[0];
     const url = currentTab.url;
 
-    // Check if the URL contains 'mail.google.com'
-    if (url && url.includes('mail.google.com')) {
-      // Enable buttons if on Gmail
-      getContactInfoButton.disabled = false;
-      createGoogleContactButton.disabled = false;
-      clearContactInfoButton.disabled = false;
+    if (url && url.includes("mail.google.com")) {
+      enableButtons();
     } else {
-      // Disable buttons and show a message if not on Gmail
-      getContactInfoButton.disabled = true;
-      createGoogleContactButton.disabled = true;
-      clearContactInfoButton.disabled = true;
-
-      // Optionally show a message
-      bannerMessageElement.textContent = 'Please open Gmail to use this extension.';
-      messageBanner.classList.remove("hidden");
-      messageBanner.style.backgroundColor = 'red';
+      disableButtons();
+      showBannerMessage("Please open Gmail to use this extension.", "red");
     }
   });
+};
 
-  getContactInfoButton.addEventListener("click", () => {
-    showLoadingSpinner(loadingSpinnerGet);
-    chrome.runtime.sendMessage({ name: "extractEmailBody" }, (response) => {
-      if (response && response.emailContent) {
-        chrome.runtime.sendMessage(
-          {
-            name: "extractContactInfoFromEmail",
-            emailContent: response.emailContent,
-            senderEmailAddress: response.senderEmailAddress,
-          },
-          (response) => {
-            contactInfo = response.contactInfo;
+// Initialize all event listeners
+const initializeEventListeners = () => {
+  getContactInfoButton.addEventListener("click", handleGetContactInfo);
+  createGoogleContactButton.addEventListener(
+    "click",
+    handleCreateGoogleContact
+  );
+  clearContactInfoButton.addEventListener("click", clearContactInfo);
+  closeBannerButton.addEventListener("click", closeBanner);
+};
 
-            if (contactInfo) {
-              hideLoadingSpinner(loadingSpinnerGet);
-              emailPreview.textContent =
-                contactInfo.emailAddresses[0].value || "N/A";
-              firstNamePreview.textContent =
-                contactInfo.names[0].givenName || "N/A";
-              lastNamePreview.textContent =
-                contactInfo.names[0].familyName || "N/A";
-              phonePreview.textContent =
-                contactInfo.phoneNumbers[0].value || "N/A";
-              urlPreview.textContent = contactInfo.urls[0].value || "N/A";
+// Handle getting contact info from Gmail
+const handleGetContactInfo = () => {
+  showLoadingSpinner(loadingSpinnerGet);
+  chrome.runtime.sendMessage({ name: "extractEmailBody" }, (response) => {
+    if (response && response.emailContent) {
+      extractContactInfo(response);
+    } else {
+      console.log("Failed to extract email content.");
+      hideLoadingSpinner(loadingSpinnerGet);
+    }
+  });
+};
 
-              createGoogleContactButton.disabled = false;
-            }
-          }
-        );
-      } else {
-        console.log("Failed to extract email content.");
-        // add banner notification here
+// Extract contact info from email content
+const extractContactInfo = (response) => {
+  chrome.runtime.sendMessage(
+    {
+      name: "extractContactInfoFromEmail",
+      emailContent: response.emailContent,
+      senderEmailAddress: response.senderEmailAddress,
+    },
+    (response) => {
+      contactInfo = response.contactInfo;
+
+      if (contactInfo) {
+        updateContactInfoPreview(contactInfo);
         hideLoadingSpinner(loadingSpinnerGet);
+        createGoogleContactButton.disabled = false;
       }
-    });
-  });
+    }
+  );
+};
 
-  closeBannerButton.addEventListener("click", () => {
-    messageBanner.classList.add("hidden");
-    bannerMessageElement.textContent = "";
-  });
+// Handle creating a Google contact
+const handleCreateGoogleContact = () => {
+  showLoadingSpinner(loadingSpinnerCreate);
 
-  createGoogleContactButton.addEventListener("click", () => {
-    showLoadingSpinner(loadingSpinnerCreate);
-
-    chrome.storage.local.get(["authToken"], function (result) {
-      if (result.authToken) {
-        if (emailPreview.textContent !== "") {
-          chrome.runtime.sendMessage(
-            {
-              name: "createGoogleContactViaPeopleApi",
-              contactInfoBody: contactInfo,
-            },
-            (response) => {
-              bannerMessageElement.textContent = response.responseMessage;
-              messageBanner.classList.remove("hidden");
-              createGoogleContactButton.disabled = true;
-              hideLoadingSpinner(loadingSpinnerCreate);
-            }
-          );
-        } else {
-          bannerMessageElement.textContent = "Contact info is not available to create contact!";
-          messageBanner.classList.remove("hidden");
+  chrome.storage.local.get(["authToken"], (result) => {
+    if (result.authToken && emailPreview.textContent !== "") {
+      chrome.runtime.sendMessage(
+        {
+          name: "createGoogleContactViaPeopleApi",
+          contactInfoBody: contactInfo,
+        },
+        (response) => {
+          showBannerMessage(response.responseMessage);
+          createGoogleContactButton.disabled = true;
           hideLoadingSpinner(loadingSpinnerCreate);
         }
-      } else {
-        bannerMessageElement.textContent = "User not logged in!  Log into Google through your browser.";
-        messageBanner.classList.remove("hidden");
-        hideLoadingSpinner(loadingSpinnerCreate);
-      }
-    });
+      );
+    } else {
+      const message = result.authToken
+        ? "Contact info is not available to create contact!"
+        : "User not logged in! Log into Google through your browser.";
+      showBannerMessage(message, "red");
+      hideLoadingSpinner(loadingSpinnerCreate);
+    }
   });
+};
 
-  clearContactInfoButton.addEventListener("click", () => {
-    emailPreview.textContent = "";
-    firstNamePreview.textContent = "";
-    lastNamePreview.textContent = "";
-    phonePreview.textContent = "";
-    urlPreview.textContent = "";
-    createGoogleContactButton.disabled = true;
-  });
-});
+// Update contact info preview on UI
+const updateContactInfoPreview = (contactInfo) => {
+  emailPreview.textContent = contactInfo.emailAddresses[0].value || "N/A";
+  firstNamePreview.textContent = contactInfo.names[0].givenName || "N/A";
+  lastNamePreview.textContent = contactInfo.names[0].familyName || "N/A";
+  phonePreview.textContent = contactInfo.phoneNumbers[0].value || "N/A";
+  urlPreview.textContent = contactInfo.urls[0].value || "N/A";
+};
+
+// Clear contact info previews
+const clearContactInfo = () => {
+  emailPreview.textContent = "";
+  firstNamePreview.textContent = "";
+  lastNamePreview.textContent = "";
+  phonePreview.textContent = "";
+  urlPreview.textContent = "";
+  createGoogleContactButton.disabled = true;
+};
+
+// Banner message handling
+const showBannerMessage = (message, color = "green") => {
+  bannerMessageElement.textContent = message;
+  messageBanner.classList.remove("hidden");
+  messageBanner.style.backgroundColor = color;
+};
+
+const closeBanner = () => {
+  messageBanner.classList.add("hidden");
+  bannerMessageElement.textContent = "";
+};
+
+// Button handling
+const enableButtons = () => {
+  getContactInfoButton.disabled = false;
+  createGoogleContactButton.disabled = false;
+  clearContactInfoButton.disabled = false;
+};
+
+const disableButtons = () => {
+  getContactInfoButton.disabled = true;
+  createGoogleContactButton.disabled = true;
+  clearContactInfoButton.disabled = true;
+};
+
+// Loading spinner handling
+const showLoadingSpinner = (spinner) => {
+  spinner.classList.remove("hidden");
+};
+
+const hideLoadingSpinner = (spinner) => {
+  spinner.classList.add("hidden");
+};
