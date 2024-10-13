@@ -14,21 +14,43 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           {
             role: "user",
             content: `
-              This is an email message from the sender's email address: ${request.senderEmailAddress}. Based on the following email body, please extract the sender's full name, the sender's email (${request.senderEmailAddress}), phone number, and any other relevant contact information (e.g., website, social media) in JSON format:
+                This is an email message from the sender's email address: ${request.senderEmailAddress}. Based on the following email body, please extract the sender's full name, email (${request.senderEmailAddress}), phone number, and any additional details in JSON format.
 
-              Email body: ${request.emailContent}
+                Email body: ${request.emailContent}
 
-              Please return the contact information in a JSON object with the following fields:
+                Please return the contact information in a JSON object with the following fields, formatted to be used for creating a new contact via the Google People API:
 
-              full_name
-              first name
-              last name (please watch out for people who have two last names or hyphenated last names if applicable)
-              nickname (if available)
-              email
-              phone_number
-              website (if available)
-              social_media (if available, please seperate out each applicable social media like: Instagram: handle, Facebook: name, etc)
-              If any field is not available, do not include it in the output.
+                {
+                    "names": [
+                        {
+                        "givenName": "first_name",
+                        "familyName": "last_name",
+                        "displayName": "full_name"
+                        }
+                    ],
+                    "nicknames": [
+                        {
+                        "value": "nickname"
+                        }
+                    ],
+                    "emailAddresses": [
+                        {
+                        "value": "email"
+                        }
+                    ],
+                    "phoneNumbers": [
+                        {
+                        "value": "phone_number"
+                        }
+                    ],
+                    "urls": [
+                        {
+                        "value": "website"
+                        }
+                    ]
+                }
+
+                If any field is not available, DO NOT include it in the output. Ensure the JSON is properly structured for a Google People API call.
             `,
           },
         ],
@@ -92,5 +114,48 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
     });
     return true; // Keep the message channel open for async response
+  }
+});
+
+// add handler here to google people api call
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.name === "createGoogleContactViaPeopleApi") {
+    chrome.storage.local.get(["authToken"], function (result) {
+      const token = result.authToken;
+      if (token) {
+        console.log(`Token received: ${token}`);
+
+        fetch("https://people.googleapis.com/v1/people:createContact", {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(message.contactInfoBody),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              // If the response is not successful (e.g., status code is not 2xx)
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("API response data:", data);
+            sendResponse({
+              responseMessage: "Contact created in Google successfully!",
+            }); // send some response to the pop up to indicate success/failure
+          })
+          .catch((error) => {
+            console.error("Error making API request:", error);
+            sendResponse({
+              responseMessage: `There was an error creating the contact in Google: ${error}`,
+            });
+          });
+      }
+      // might want to add an else case to try to log in or do something here
+    });
+
+    return true;
   }
 });
