@@ -14,6 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const lastNamePreview = document.getElementById("lastNamePreview");
   const phonePreview = document.getElementById("phonePreview");
   const urlPreview = document.getElementById("urlPreview");
+  const bannerMessageElement = document.getElementById("bannerMessage");
+  const messageBanner = document.getElementById("messageBanner");
+  const closeBannerButton = document.getElementById("closeBannerButton");
 
   getContactInfoButton.addEventListener("click", () => {
     chrome.runtime.sendMessage({ name: "extractEmailBody" }, (response) => {
@@ -38,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 contactInfo.phoneNumbers[0].value || "N/A";
               urlPreview.textContent = contactInfo.urls[0].value || "N/A";
 
-              createGoogleContactButton.disabled = false; // Remove the disabled state
+              createGoogleContactButton.disabled = false;
             }
           }
         );
@@ -48,21 +51,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  closeBannerButton.addEventListener("click", () => {
+    messageBanner.classList.add("hidden");
+    bannerMessageElement.textContent = "";
+  });
+
   createGoogleContactButton.addEventListener("click", () => {
     console.log("Create contact button clicked");
 
     chrome.storage.local.get(["authToken"], function (result) {
       if (result.authToken) {
-        // am i logged in?
         if (emailPreview.textContent !== "") {
-          //do i have email info in the preview?
           chrome.runtime.sendMessage(
             {
               name: "createGoogleContactViaPeopleApi",
               contactInfoBody: contactInfo,
             },
             (response) => {
-              console.log("Contact created:", response);
+              console.log("Contact created:", response.responseMessage);
+              bannerMessageElement.textContent = response.responseMessage;
+              messageBanner.classList.remove("hidden");
               createGoogleContactButton.disabled = true;
             }
           );

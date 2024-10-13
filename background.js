@@ -144,7 +144,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             console.log("API response data:", data);
             sendResponse({
               responseMessage: "Contact created in Google successfully!",
-            }); // send some response to the pop up to indicate success/failure
+            });
           })
           .catch((error) => {
             console.error("Error making API request:", error);
@@ -153,7 +153,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             });
           });
       }
-      // might want to add an else case to try to log in or do something here
     });
 
     return true;
