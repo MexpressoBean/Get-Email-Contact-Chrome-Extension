@@ -28,6 +28,29 @@ document.addEventListener("DOMContentLoaded", function () {
     spinner.classList.add("hidden");
   };
 
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const currentTab = tabs[0];
+    const url = currentTab.url;
+
+    // Check if the URL contains 'mail.google.com'
+    if (url && url.includes('mail.google.com')) {
+      // Enable buttons if on Gmail
+      getContactInfoButton.disabled = false;
+      createGoogleContactButton.disabled = false;
+      clearContactInfoButton.disabled = false;
+    } else {
+      // Disable buttons and show a message if not on Gmail
+      getContactInfoButton.disabled = true;
+      createGoogleContactButton.disabled = true;
+      clearContactInfoButton.disabled = true;
+
+      // Optionally show a message
+      bannerMessageElement.textContent = 'Please open Gmail to use this extension.';
+      messageBanner.classList.remove("hidden");
+      messageBanner.style.backgroundColor = 'red';
+    }
+  });
+
   getContactInfoButton.addEventListener("click", () => {
     showLoadingSpinner(loadingSpinnerGet);
     chrome.runtime.sendMessage({ name: "extractEmailBody" }, (response) => {
