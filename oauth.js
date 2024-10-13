@@ -1,7 +1,12 @@
 window.onload = function () {
   const authButton = document.getElementById("authButton");
+  const createGoogleContactButton = document.getElementById("createContactButton");
+
+  // Initial check for current logged in user in chrome browser
   chrome.identity.getAuthToken({ interactive: false }, function (token) {
     if (chrome.runtime.lastError || !token) {
+      authButton.style.display = "block"; // Show the login button if no token
+
       // User is not logged in, show "Login with Google"
       authButton.textContent = "Login with Google";
     } else {
@@ -10,10 +15,13 @@ window.onload = function () {
       chrome.storage.local.set({ authToken: token }, function () {
         console.log("Auth token saved:", token);
       });
+
+      authButton.style.display = "none"; // Hide the login button if we have a token
       authButton.textContent = "Log out";
     }
   });
 
+  // Button handler to either login or logout depending on existence of google auth token
   authButton.addEventListener("click", function () {
     if (authButton.textContent === "Login with Google") {
       // Log in user
@@ -26,6 +34,7 @@ window.onload = function () {
         chrome.storage.local.set({ authToken: token }, function () {
           console.log("Auth token saved:", token);
         });
+        authButton.style.display = "none"; // Hide the login button if we have a token
         authButton.textContent = "Log out";
       });
     } else {
@@ -35,6 +44,10 @@ window.onload = function () {
 
         if (!token) {
           console.error("No token found for logout.");
+          authButton.style.display = "block"; // Show the login button if no token
+
+          // User is not logged in, show "Login with Google"
+          authButton.textContent = "Login with Google";
           return;
         }
 
@@ -53,7 +66,7 @@ window.onload = function () {
           // Optionally, remove token from chrome.storage.local as well
           chrome.storage.local.remove("authToken", function () {
             console.log("Token removed from local storage");
-            document.getElementById("authButton").innerText = "Login with Google";
+            authButton.innerText = "Login with Google";
           });
         });
       });

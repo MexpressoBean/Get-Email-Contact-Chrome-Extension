@@ -3,7 +3,7 @@ let contactInfo = null;
 
 document.addEventListener("DOMContentLoaded", function () {
   const getContactInfoButton = document.getElementById("getContactInfoButton");
-  const createContactButton = document.getElementById("createContactButton");
+  const createGoogleContactButton = document.getElementById("createContactButton");
   const clearContactInfoButton = document.getElementById(
     "clearContactInfoButton"
   );
@@ -25,7 +25,8 @@ document.addEventListener("DOMContentLoaded", function () {
           (response) => {
             contactInfo = response.contactInfo;
 
-            emailPreview.textContent =
+            if (contactInfo) {
+              emailPreview.textContent =
               contactInfo.emailAddresses[0].value || "N/A";
             firstNamePreview.textContent =
               contactInfo.names[0].givenName || "N/A";
@@ -34,6 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
             phonePreview.textContent =
               contactInfo.phoneNumbers[0].value || "N/A";
             urlPreview.textContent = contactInfo.urls[0].value || "N/A";
+
+            createGoogleContactButton.disabled = false; // Remove the disabled state
+            }
           }
         );
       } else {
@@ -42,24 +46,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  createContactButton.addEventListener("click", () => {
+  createGoogleContactButton.addEventListener("click", () => {
     console.log("Create contact button clicked");
 
-    // need to add something here that will prevent the user from hitting the button until there is new contact info
-    // also maybe i null out the contact info?
-
-    if (contactInfo) {
-      chrome.runtime.sendMessage(
-        {
-          name: "createGoogleContactViaPeopleApi",
-          contactInfoBody: contactInfo,
-        },
-        (response) => {
-          // do something with response
-          console.log("Contact created:", response);
+    chrome.storage.local.get(["authToken"], function (result) {
+      if (result.authToken) { // am i logged in?
+        if (emailPreview.textContent !== "") { //do i have email info in the preview?
+          chrome.runtime.sendMessage(
+            {
+              name: "createGoogleContactViaPeopleApi",
+              contactInfoBody: contactInfo,
+            },
+            (response) => {
+              console.log("Contact created:", response);
+              createGoogleContactButton.disabled = true;
+            }
+          );
         }
-      );
-    }
+      }
+    })
   });
 
   clearContactInfoButton.addEventListener("click", () => {
@@ -68,5 +73,6 @@ document.addEventListener("DOMContentLoaded", function () {
     lastNamePreview.textContent = "";
     phonePreview.textContent = "";
     urlPreview.textContent = "";
+    createGoogleContactButton.disabled = true;
   });
 });
