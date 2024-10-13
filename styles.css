@@ -29,19 +29,25 @@ body {
   padding: 20px; /* Padding for aesthetics */
 }
 
+.button-spinner-container {
+  display: inline-flex; /* Use inline-flex to ensure container fits content */
+  align-items: center; /* Align spinner and button vertically */
+  margin-bottom: 10px; /* Spacing between buttons if there are multiple */
+}
+
 .styled-button {
-  background-color: #ffffff; /* White button background for contrast */
-  color: #0052cc; /* Darker blue text */
-  border: 2px solid #0052cc; /* Darker blue border */
-  padding: 14px; /* Uniform padding */
-  text-align: center; /* Centered text */
-  font-size: 16px; /* Font size */
-  margin: 10px 0; /* Margin */
-  cursor: pointer; /* Pointer cursor */
-  border-radius: 5px; /* Slightly rounded corners */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
-  outline: none; /* Remove outline */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+  background-color: #ffffff; /* White background */
+  color: #0052cc; /* Blue text */
+  border: 2px solid #0052cc; /* Blue border */
+  padding: 10px 20px; /* Adjust padding for consistency */
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-right: 10px; /* Space between the button and spinner */
 }
 
 .styled-button:hover {
@@ -131,49 +137,53 @@ h2 {
 }
 
 .banner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #0052cc;
-    color: white;
-    padding: 10px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    font-size: 18px;
-    z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  .close-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0052cc;
+  color: white;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 18px;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  .spinner {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    animation: spin 1s linear infinite;
-    margin-left: 5px; /* Space between button and spinner */
+.hidden {
+  display: none;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid #3498db; /* Blue */
+  border-radius: 50%; /* Ensures circular shape */
+  width: 16px; /* Adjust size for spinner */
+  height: 16px; /* Ensure it matches width */
+  animation: spin 1s linear infinite;
+}
+
+/* Keep the hidden class the same */
+.hidden {
+  display: none; /* Keep it hidden by default */
+}
+
+/* Keyframes for spinner animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .hidden {
-    display: none; /* Keep it hidden by default */
+  100% {
+    transform: rotate(360deg);
   }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
+}

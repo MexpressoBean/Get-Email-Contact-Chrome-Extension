@@ -17,14 +17,18 @@
     <div class="modal">
       <div class="button-container">
         <button id="authButton" class="styled-button">Login with Google</button>
-        <button id="getContactInfoButton" class="styled-button">
-          Get Contact Info from Gmail
-        </button>
-        <span id="loadingSpinnerGet" class="spinner hidden"></span>
-        <button id="createContactButton" class="styled-button" disabled>
-          Create Contact in Google Contacts
-        </button>
-        <span id="loadingSpinnerCreate" class="spinner hidden"></span>
+        <div class="button-spinner-container">
+          <button id="getContactInfoButton" class="styled-button">
+            Get Contact Info from Gmail
+          </button>
+          <span id="loadingSpinnerGet" class="spinner hidden"></span>
+        </div>
+        <div class="button-spinner-container">
+          <button id="createContactButton" class="styled-button" disabled>
+            Create Contact in Google Contacts
+          </button>
+          <span id="loadingSpinnerCreate" class="spinner hidden"></span>
+        </div>
         <button id="clearContactInfoButton" class="styled-button clear-button">
           Clear Contact Info
         </button>
