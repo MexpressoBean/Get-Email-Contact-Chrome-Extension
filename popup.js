@@ -1,4 +1,17 @@
 let contactInfo = null;
+let getContactInfoButton;
+let createGoogleContactButton;
+let clearContactInfoButton;
+let emailPreview;
+let firstNamePreview;
+let lastNamePreview;
+let phonePreview;
+let urlPreview;
+let bannerMessageElement;
+let messageBanner;
+let closeBannerButton;
+let loadingSpinnerGet;
+let loadingSpinnerCreate;
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize all elements and event listeners
@@ -9,23 +22,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Initialize UI elements
 const initializeElements = () => {
-  this.getContactInfoButton = document.getElementById("getContactInfoButton");
-  this.createGoogleContactButton = document.getElementById(
-    "createContactButton"
-  );
-  this.clearContactInfoButton = document.getElementById(
-    "clearContactInfoButton"
-  );
-  this.emailPreview = document.getElementById("emailPreview");
-  this.firstNamePreview = document.getElementById("firstNamePreview");
-  this.lastNamePreview = document.getElementById("lastNamePreview");
-  this.phonePreview = document.getElementById("phonePreview");
-  this.urlPreview = document.getElementById("urlPreview");
-  this.bannerMessageElement = document.getElementById("bannerMessage");
-  this.messageBanner = document.getElementById("messageBanner");
-  this.closeBannerButton = document.getElementById("closeBannerButton");
-  this.loadingSpinnerGet = document.getElementById("loadingSpinnerGet");
-  this.loadingSpinnerCreate = document.getElementById("loadingSpinnerCreate");
+  getContactInfoButton = document.getElementById("getContactInfoButton");
+  createGoogleContactButton = document.getElementById("createContactButton");
+  clearContactInfoButton = document.getElementById("clearContactInfoButton");
+  emailPreview = document.getElementById("emailPreview");
+  firstNamePreview = document.getElementById("firstNamePreview");
+  lastNamePreview = document.getElementById("lastNamePreview");
+  phonePreview = document.getElementById("phonePreview");
+  urlPreview = document.getElementById("urlPreview");
+  bannerMessageElement = document.getElementById("bannerMessage");
+  messageBanner = document.getElementById("messageBanner");
+  closeBannerButton = document.getElementById("closeBannerButton");
+  loadingSpinnerGet = document.getElementById("loadingSpinnerGet");
+  loadingSpinnerCreate = document.getElementById("loadingSpinnerCreate");
 };
 
 // Check if current page is Gmail
