@@ -116,3 +116,16 @@ h2 {
     border-radius: 5px; /* Rounded corners for the ad area */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect for the ad area */
 }
+
+#authButton {
+    display: none; /* Initially hidden until the check runs */
+}
+
+.styled-button:disabled {
+    background-color: #cccccc; /* Gray background */
+    color: #666666; /* Darker text color */
+    cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+    border: 2px solid #aaaaaa; /* Gray border */
+    box-shadow: none; /* Remove shadow */
+    transform: none; /* Disable hover effect */
+}
