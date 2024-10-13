@@ -17,8 +17,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const bannerMessageElement = document.getElementById("bannerMessage");
   const messageBanner = document.getElementById("messageBanner");
   const closeBannerButton = document.getElementById("closeBannerButton");
+  const loadingSpinnerGet = document.getElementById("loadingSpinnerGet");
+  const loadingSpinnerCreate = document.getElementById("loadingSpinnerCreate");
+
+  const showLoadingSpinner = (spinner) => {
+    spinner.classList.remove("hidden");
+  };
+
+  const hideLoadingSpinner = (spinner) => {
+    spinner.classList.add("hidden");
+  };
 
   getContactInfoButton.addEventListener("click", () => {
+    showLoadingSpinner(loadingSpinnerGet);
     chrome.runtime.sendMessage({ name: "extractEmailBody" }, (response) => {
       if (response && response.emailContent) {
         chrome.runtime.sendMessage(
@@ -31,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
             contactInfo = response.contactInfo;
 
             if (contactInfo) {
+              hideLoadingSpinner(loadingSpinnerGet);
               emailPreview.textContent =
                 contactInfo.emailAddresses[0].value || "N/A";
               firstNamePreview.textContent =
@@ -47,6 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
         );
       } else {
         console.log("Failed to extract email content.");
+        // add banner notification here
+        hideLoadingSpinner(loadingSpinnerGet);
       }
     });
   });
@@ -57,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   createGoogleContactButton.addEventListener("click", () => {
-    console.log("Create contact button clicked");
+    showLoadingSpinner(loadingSpinnerCreate);
 
     chrome.storage.local.get(["authToken"], function (result) {
       if (result.authToken) {
@@ -68,13 +82,21 @@ document.addEventListener("DOMContentLoaded", function () {
               contactInfoBody: contactInfo,
             },
             (response) => {
-              console.log("Contact created:", response.responseMessage);
               bannerMessageElement.textContent = response.responseMessage;
               messageBanner.classList.remove("hidden");
               createGoogleContactButton.disabled = true;
+              hideLoadingSpinner(loadingSpinnerCreate);
             }
           );
+        } else {
+          bannerMessageElement.textContent = "Contact info is not available to create contact!";
+          messageBanner.classList.remove("hidden");
+          hideLoadingSpinner(loadingSpinnerCreate);
         }
+      } else {
+        bannerMessageElement.textContent = "User not logged in!  Log into Google through your browser.";
+        messageBanner.classList.remove("hidden");
+        hideLoadingSpinner(loadingSpinnerCreate);
       }
     });
   });
