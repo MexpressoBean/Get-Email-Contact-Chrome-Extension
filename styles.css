@@ -121,6 +121,7 @@ h2 {
   background-color: #f2f2f2; /* Softer background for advertisement area */
   border-radius: 5px; /* Rounded corners for the ad area */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect for the ad area */
+  visibility: hidden;
 }
 
 #authButton {
