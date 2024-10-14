@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "AI Gmail Contact Fetcher: Gmail to Google Contacts",
+  "name": "AI Contact Fetcher: Gmail to Google Contacts",
   "version": "1.0",
-  "description": "Easily extract contact information from Gmail messages using AI and create Google Contacts with a single click. Perfect for professionals, sales teams, and anyone looking to streamline contact management!",
+  "description": "Easily extract contact information from Gmail messages using AI and create Google Contacts with a single click!",
   "permissions": ["activeTab", "scripting", "tabs", "identity", "storage"],
 
   "action": {
