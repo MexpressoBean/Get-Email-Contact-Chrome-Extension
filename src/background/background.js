@@ -1,4 +1,4 @@
-importScripts("config.js");
+importScripts("../config/config.js");
 
 // Listener for message events
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -98,7 +98,7 @@ const handleEmailBodyExtraction = (sendResponse) => {
       chrome.scripting.executeScript(
         {
           target: { tabId: tabs[0].id },
-          files: ["contentScript.js"],
+          files: ["../content/contentScript.js"],
         },
         () => {
           chrome.tabs.sendMessage(
